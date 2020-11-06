@@ -25,23 +25,46 @@ public class NBody extends JPanel implements ActionListener {
         super.paintComponent(g);
 
         g.setColor(Color.BLACK);
-        for (int i = 1; i <= uni.size(); i++) {
-            g.fillOval((int) uni.get(i).xcor, (int) uni.get(i).ycor, uni.get(i).size, uni.get(i).size);
+
+        if (data_struct.equals("LinkedList")){
+            for (int i = 0; i < uni.size(); i++) {
+
+                g.fillOval((int) uni.get(i).xcor, (int) uni.get(i).ycor, uni.get(i).size, uni.get(i).size);
+            }
+        } else {
+            for (int i = 1; i <= uni.size(); i++) {
+                g.fillOval((int) uni.get(i).xcor, (int) uni.get(i).ycor, uni.get(i).size, uni.get(i).size);
+            }
         }
+
+
+
 
         tm.start();
     }
     @Override
     public void actionPerformed(ActionEvent e) {
 
-        for (int i=1; i<=uni.size();i++){
-            for (int j=1; j<=uni.size();j++){
-                if (j!=i){
-                    uni.get(i).force(uni.get(j));
+        if (data_struct.equals("LinkedList")){
+            for (int i=0; i<uni.size();i++){
+                for (int j=0; j<uni.size();j++){
+                    if (j!=i){
+                        uni.get(i).force(uni.get(j));
+                    }
                 }
+                uni.get(i).move(1);
             }
-            uni.get(i).move(1);
+        } else {
+            for (int i=1; i<=uni.size();i++){
+                for (int j=1; j<=uni.size();j++){
+                    if (j!=i){
+                        uni.get(i).force(uni.get(j));
+                    }
+                }
+                uni.get(i).move(1);
+            }
         }
+
 
         repaint();
     }
