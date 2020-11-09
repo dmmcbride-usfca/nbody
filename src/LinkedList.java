@@ -1,20 +1,25 @@
+// LinkedList implementation
 public class LinkedList<T> implements List<T> {
     Node<T> head;
     Node<T> tail;
     int size;
 
+    // constructing the class with head and tail and a size variable
     public LinkedList() {
         head = tail = null;
         size = 0;
     }
 
+
     @Override
     public boolean add(T item) {
         Node<T> node = new Node(item);
+        // Special case for empty list
         if (head == null) {
             head = node;
             tail = node;
             size = 1;
+        // Adds new element to the end of the list and increments size
         } else {
             tail.next = node;
             tail = node;
@@ -25,9 +30,11 @@ public class LinkedList<T> implements List<T> {
 
     @Override
     public T get(int idx) {
-        if (idx<0){ return null; }
+        // returns null when idx is out of range
+        if (idx<0 || idx>size){ return null; }
         Node cur = head;
         int i=0;
+        //walks down the list to the given idx
         while (cur!=null){
             if (i==idx)
                 return (T) cur.value;
@@ -38,6 +45,7 @@ public class LinkedList<T> implements List<T> {
     }
 
     @Override
+    // overloaded add method for adding an item that to a specific idx
     public void add(int idx, T item) throws Exception {
         Node node = new Node(item);
         if (idx<0 || idx>=size){
@@ -70,6 +78,7 @@ public class LinkedList<T> implements List<T> {
 
     @Override
     public T remove(int idx) throws Exception {
+        // throws exception when idx is out of range
         if (idx<0 || idx>=size){
             throw new Exception("Out of range.");
         }
@@ -112,10 +121,12 @@ public class LinkedList<T> implements List<T> {
         return null;
     }
 
+    // getter for size
     @Override
     public int size() {
         return size;
     }
+
     private class Node <E>{
         E value;
         Node<E> next;

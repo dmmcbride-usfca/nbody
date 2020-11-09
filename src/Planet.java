@@ -1,3 +1,6 @@
+// This class represents a given planet, it stores attributes for that planet as well as methods
+// needed to do physics
+
 public class Planet {
     private static final double G = 6.67408e-11;
     public double scale;
@@ -23,19 +26,21 @@ public class Planet {
         this.m = m;
         this.size = size;
     }
+
     public double getx(){
         return xcor;
     }
     public double gety(){
         return ycor;
     }
-
+    // calculates distance from this planet to another
     public double distFrom(Planet other){
         double distx = xcor*scale - other.xcor*scale;
         double disty = ycor*scale - other.ycor*scale;
         return Math.sqrt(Math.pow(distx,2)+Math.pow(disty,2));
     }
 
+    // Calculates force acting upon this planet from an other planet according to the force equation
     public void force(Planet other) {
         double dist = distFrom(other);
         double F = (G * m * other.m) / (Math.pow(dist, 2));
@@ -43,11 +48,14 @@ public class Planet {
         this.fy += F * other.ycor*scale / dist;
     }
 
+    // Moves the planet according to the total force given by the force() method over a given period of time
     public void move(double t) {
         xdirv += t * fx / m;
         ydirv += t * fy / m;
         xcor += (t * xdirv)/scale;
         ycor += (t * ydirv)/scale;
+
+        // zeroes the force after the movement has completed
         fx = 0.0;
         fy = 0.0;
     }
